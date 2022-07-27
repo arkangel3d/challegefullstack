@@ -1,4 +1,4 @@
-const { DataTypes, } = require('sequelize');
+const { DataTypes } = require('sequelize');
 
 const Transsaction = (sequelize)=>{
     sequelize.define('Transsaction', {
@@ -12,7 +12,7 @@ const Transsaction = (sequelize)=>{
             allowNull: false
         },
         amount: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.DECIMAL,
             allowNull: false
         },
         description:{
@@ -20,7 +20,7 @@ const Transsaction = (sequelize)=>{
             allowNull: false
         },
         date: {
-            type: DataTypes.DATE,
+            type: DataTypes.STRING,
             allowNull: false
         }
         },{

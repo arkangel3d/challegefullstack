@@ -23,6 +23,10 @@ const User = (sequelize)=>{
                 type: DataTypes.STRING,
                 allowNull: false
             },
+            amountTotal: {
+                type: DataTypes.DECIMAL,
+                
+            },
         }, {
             timestamps: false,
         });
