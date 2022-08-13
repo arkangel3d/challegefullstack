@@ -15,7 +15,7 @@ app.use(morgan("dev"));
 app.use('/api/v1', router);
 
 const port = process.env.PORT || 3001;
-
+//{force:true}
 sequelize.sync({force:true}).then(() => {
     app.listen(port, () => {
         console.log(`Server is running on port ${process.env.PORT}`);

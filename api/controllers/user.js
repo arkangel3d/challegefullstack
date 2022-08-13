@@ -2,7 +2,7 @@ const sequelize = require('../dataBase/dbConfig');
 const { User, Transsaction  } = sequelize.models;
 
 const getUser = async (req, res)=>{
-    const id = Number(req.params.id);
+    const id = req.params.id;
     try {
 
      const user = await User.findByPk(id,{include: [{model: Transsaction}]});
@@ -27,7 +27,7 @@ const createUser = async (req, res)=>{
 };
 
 const updateUser = async (req, res)=>{
-    const id = Number(req.params.id);
+    const id = req.params.id;
     try{
         const user = await User.update(req.body,{where: {id}});
         if(!user){
@@ -40,7 +40,7 @@ const updateUser = async (req, res)=>{
     
 };
 const deleteUser = async (req, res)=>{
-    const id = Number(req.params.id);
+    const id = req.params.id;
     try{
         const user = await User.destroy({where: {id}});
         if(!user){

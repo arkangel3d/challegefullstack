@@ -8,8 +8,11 @@ const Transsaction = (sequelize)=>{
             autoIncrement: true
         },
         type: {
-            type: DataTypes.STRING,
+            type: DataTypes.ENUM('income', 'expense'),
             allowNull: false
+        },
+        category: {
+            type: DataTypes.STRING,
         },
         amount: {
             type: DataTypes.DECIMAL,
@@ -21,7 +24,8 @@ const Transsaction = (sequelize)=>{
         },
         date: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
+            default: new Date(),
         }
         },{
             timestamps: false,

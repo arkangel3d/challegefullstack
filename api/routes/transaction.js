@@ -1,7 +1,7 @@
 const router = require('express').Router();
-const {  createTranssaction } = require('../controllers/transaction');
+const {  setTranssaction } = require('../controllers/transaction');
 
-router.post('/:id',createTranssaction)
+router.post('/:id',setTranssaction)
 
 
 module.exports = router;

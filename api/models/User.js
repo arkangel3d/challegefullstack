@@ -17,14 +17,16 @@ const User = (sequelize)=>{
             },
             email: {
                 type: DataTypes.STRING,
-                allowNull: false
+                allowNull: false, 
+                unique: true
             },
             password: {
                 type: DataTypes.STRING,
                 allowNull: false
             },
-            amountTotal: {
+            balance: {
                 type: DataTypes.DECIMAL,
+                defaultValue: 0.00
                 
             },
         }, {

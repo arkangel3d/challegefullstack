@@ -1,7 +1,6 @@
 const { Sequelize } = require('sequelize');
 require('dotenv').config();
-const userM = require('../models/User');
-const transsactionM = require('../models/Transsaction');
+const {UserModel, TransactionModel, CategoryModel} = require('../models/index');
 
 const { DB_HOST, DB_USER, DB_PASSWORD, DB_NAME } = process.env;
 
@@ -18,11 +17,14 @@ sequelize
 .catch((err) => {
   console.error("Unable to connect to the database:", err);
 });
-userM(sequelize);
-transsactionM(sequelize);
+UserModel(sequelize);
+TransactionModel(sequelize);
+CategoryModel(sequelize);
 
-const { User, Transsaction  } = sequelize.models;
+const { User, Transsaction, Category  } = sequelize.models;
 
-Transsaction.hasOne(User);
 User.belongsToMany(Transsaction,  {through : 'UserTranssaction'});
+Transsaction.belongsTo(User);
+// Transsaction.belongsTo(Category);
+// Category.hasMany(Transsaction);
 module.exports = sequelize; 
