@@ -18,11 +18,17 @@ const singIn = async (req, res) => {
             const hashPassword = await hash(password);
          
             if(hashPassword === user.password){
-                const tokenJwt = await sign(user.id);
+                const tokenJwt = await sign({id:user.id});
                 
              const data = {
                 token: tokenJwt,
-                user: user,
+                user: {
+                    id: user.id,
+                    name: user.name,
+                    lastName: user.lastName,
+                    email: user.email,
+                    balance: user.balance,
+                },
                 };
               
                 return res.status(201).json(data);
@@ -46,7 +52,7 @@ const singUp = async (req, res) => {
         
         if(!user){
         const createUser = await User.create({name,lastName,email, password: hashPassword});
-        const tokenJwt = await sign(createUser.id);
+        const tokenJwt = await sign({id:createUser.id});
         const dataUser ={
             token: tokenJwt,
             id: createUser.id,
