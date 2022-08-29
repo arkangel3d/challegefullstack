@@ -1,3 +1,5 @@
+const { NUMBER } = require('sequelize');
+const { FLOAT } = require('sequelize');
 const { DataTypes } = require('sequelize');
 
 const User = (sequelize)=>{
@@ -25,8 +27,8 @@ const User = (sequelize)=>{
                 allowNull: false
             },
             balance: {
-                type: DataTypes.DECIMAL,
-                defaultValue: 0.00
+                type: DataTypes.STRING,
+                defaultValue : '0.00'
                 
             },
         }, {
