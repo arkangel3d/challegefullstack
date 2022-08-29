@@ -4,13 +4,17 @@ import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { urlApi } from '../utils/config'
-const Navb = ()=>{
-const [user, setUser] = useState({});
+import { urlApi } from '../utils/config';
+import logOut from '../utils/logOut'
+const Navb = ({userLogon, setUserLogon})=>{
+const [user, setUser] = useState(false);
 const navigate = useNavigate();
 useEffect(() => {
-    const userLocalStorage = JSON.parse(localStorage.getItem('user'));
-    const token = localStorage.getItem('token');
+    let userLocalStorage = {};
+    if(localStorage.getItem('user') !== undefined){
+      userLocalStorage = JSON.parse(localStorage.getItem('user'));
+    }
+    const token =  localStorage ? localStorage.getItem('token'): '';
   
     if(userLocalStorage && token){
       const userActive = async () => {
@@ -29,13 +33,21 @@ useEffect(() => {
 
       userActive()
       .then(res => {
-       
+  
         setUser(res);
         navigate(`../user/${res.id}`,{ replace: true })
       })
       .catch(err => {
         console.log(err)
-        navigate(`../signin`,{ replace: true })
+        if(localStorage){
+          logOut('token')
+          .then( logOut('user'))
+          .catch(()=>{
+           handleLogOut()
+          });
+        }
+
+        navigate(`../`,{ replace: true })
       })
     }
    else{
@@ -44,6 +56,19 @@ useEffect(() => {
     
 },[]);
 
+const handleLogOut = async () => {
+  if(localStorage){
+     logOut('token')
+     .then( logOut('user'))
+     .catch(()=>{
+      handleLogOut()
+     });
+
+     setUser(false)
+     setUserLogon(false)
+     navigate('../')
+}
+}
   return (
 <div className='navb'>
     <Navbar>
@@ -52,7 +77,7 @@ useEffect(() => {
         <Navbar.Toggle />
         <Navbar.Collapse className="justify-content-end">
           <Navbar.Text>
-            {user ? user.name : <Link to={'/signin'}>Sign in </Link>}
+            {userLogon ? <a onClick={handleLogOut} href='#'>Logout</a> : <Link to={'/signin'}>Sign in </Link>}
           </Navbar.Text>
         </Navbar.Collapse>
       </Container>

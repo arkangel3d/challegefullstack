@@ -1,11 +1,11 @@
 
-const TransactionRender = ({data}) => {
+const TransactionRender = ({data, handleOnclik}) => {
   
     const { id, type, category, amount, description, date } = data;
-    
+   
     return(
         
-        <tr>
+        <tr key={id} id={id} name={id} onClick={ (e)=>handleOnclik(e)}>
           <td>{id}</td>
           <td>{type}</td>
           <td>{category}</td>

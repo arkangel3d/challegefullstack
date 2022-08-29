@@ -6,7 +6,7 @@ import { setLocalStore } from '../utils/localStorage';
 import { urlApi } from '../utils/config'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-const SignUp = () => {
+const SignUp = ({setUserLogon}) => {
     const navigate = useNavigate();
     const url = `${urlApi}/auth/register`;
     const [data, setData] = useState({
@@ -35,8 +35,14 @@ const SignUp = () => {
        
         try{
           const respons = await axios.post(url, data);
-          console.log(respons.data)
+          if(respons.data.message === 'User already exists'){
+            return setError({
+              ...error,
+              field :respons.data.message
+            })
+          }
           await setLocalStore(respons.data)
+          setUserLogon(true)
           return navigate(`../user/${respons.data.user.id}`,{ replace: true })
         }catch(err){
             setError({message: err.response.data.message})

@@ -6,7 +6,7 @@ import axios from 'axios';
 import { urlApi } from '../utils/config'
 import { setLocalStore } from '../utils/localStorage';
 
-const Login = () => {
+const Login = ({setUserLogon}) => {
     const url = `${urlApi}/auth/login`;
     const navigate = useNavigate();
     const [data, setData] = useState({
@@ -26,10 +26,16 @@ const Login = () => {
         e.preventDefault();
         try{
           const respons = await axios.post(url, data);
+          if(respons.data.message === 'User not found'){
+            return setError('User not found')
+          }
           await setLocalStore(respons.data)
+          setUserLogon(true)
           return navigate(`../user/${respons.data.user.id}`,{ replace: true })
         }catch(err){
             setError(err.response.data.message)
+            setUserLogon(false)
+            alert('reload the page and try again')
         }
        ;
     }

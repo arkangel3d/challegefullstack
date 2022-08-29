@@ -23,3 +23,49 @@ export const validate = (data) => {
         
     return errors;
 }
+export const validateCategory = (data) => {
+ if(data){ //se valida data para evitar errores en renderizado
+  let errors = {
+    field : '',
+    ready : false
+};
+if(data.name === '') {
+errors.field = 'name is required'
+
+}
+if(errors.field.length === 0) {
+   errors = {
+    field : '',
+    ready : true
+  }
+  return errors;
+}
+
+return errors;
+ }
+ 
+};
+export const validateTransaction = (data) => {
+ if(data){
+  
+  const { type, category, amount, description } = data;
+  let errors = {
+          field : '',
+          ready : false
+  };
+  if(!type || !category || !amount || !description) {
+     errors.field = 'All fields are required'
+    
+  }
+    if(errors.field.length === 0) {
+      
+         errors = {
+          field : '',
+          ready : true
+        }
+        return errors;
+    }
+      
+  return errors;
+ }
+}

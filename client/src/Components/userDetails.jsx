@@ -1,5 +1,5 @@
 import Transaction from "./Transaction";
-const UserDetails = ({ user }) => {
+const UserDetails = () => {
     return(
         <div>
             <Transaction />
