@@ -18,6 +18,6 @@ DB_NAME =
 #JWT
 JWT_SECRET = 
 
-desde la consola ingresar en la carpeta api y ejecutar npm start, hacer lo mismo en la carpeta client.
+desde la consola ingresar en la carpeta api y ejecutar npm install y luego npm start, hacer lo mismo en la carpeta client.
 
 el login es sencillo, no tiene funcion de recuperar contrasena. 
