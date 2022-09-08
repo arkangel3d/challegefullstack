@@ -5,14 +5,13 @@ const { sign } = require('../utils/jwt');
 
 const singIn = async (req, res) => {
     const { email, password } = req.body;
-
     try {
         const user = await User.findOne({
             where: {email},
             attributes : ['id', 'email', 'password', 'name', 'lastName', 'balance']});
 
         if(!user){
-            return res.status(404).json({message: 'User not found'});
+            return res.json({message: 'User not found'});
         }
         if(user){
             const hashPassword = await hash(password);
@@ -55,15 +54,18 @@ const singUp = async (req, res) => {
         const tokenJwt = await sign({id:createUser.id});
         const dataUser ={
             token: tokenJwt,
-            id: createUser.id,
-            name : createUser.name,
-            lastName: createUser.lastName,
-            email: createUser.email,
-            balance: createUser.balance,
+            user: {
+                id: createUser.id,
+                name : createUser.name,
+                lastName: createUser.lastName,
+                email: createUser.email,
+                balance: createUser.balance,
+            }
+           
         }
         return res.status(201).json(dataUser);
         }
-        return res.status(404).json({message: 'User already exists'});
+        return res.json({message: 'User already exists'});
     } catch (err) {
         return res.json({message: err});
     }

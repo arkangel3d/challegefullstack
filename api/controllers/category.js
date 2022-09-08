@@ -19,7 +19,12 @@ const getCategorys = async (req, res)=>{
 const createCategory= async (req, res)=>{
     try{
         const category = await Category.create(req.body);
-        return res.status(201).json(category);
+        if(!category){
+            return res.status(404).json({message: 'Error creating category'});
+         }
+         console.log(category);
+         const categorys = await Category.findAll();
+        return res.status(201).json(categorys);
     }catch(error){
         return res.json({message: error});
     }
